@@ -17,5 +17,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/listView_main"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"/>
+
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.example.jimmy.imapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,9 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +33,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //右下角按鈕
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,8 +57,8 @@ public class MainActivity extends AppCompatActivity
         List<HashMap<String , String>> list = new ArrayList<>();
         //使用List存入HashMap，用來顯示ListView上面的文字。
 
-        String[] title = new String[]{"Apple" , "Banana" , "Cat" , "Dog"};
-        String[] text  = new String[]{"蘋果" , "香蕉" , "貓" , "狗"};
+        final String[] title = new String[]{"Apple" , "Banana" , "Cat" , "Dog"};
+        final String[] text  = new String[]{"蘋果" , "香蕉" , "貓" , "狗"};
         for(int i = 0 ; i < title.length ; i++){
             HashMap<String , String> hashMap = new HashMap<>();
             hashMap.put("title" , title[i]);
@@ -74,6 +78,22 @@ public class MainActivity extends AppCompatActivity
 
         listView.setAdapter(listAdapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), "你選擇的是" + title[position], Toast.LENGTH_SHORT).show();
+
+                // 建立啟動另一個Activity元件需要的Intent物件
+                // 建構式的第一個參數：「this」
+                // 建構式的第二個參數：「Activity元件類別名稱.class」
+                Intent intent = new Intent(MainActivity.this, ItemActivity.class);
+                // 呼叫「startActivity」，參數為一個建立好的Intent物件
+                // 這行敘述執行以後，如果沒有任何錯誤，就會啟動指定的元件
+                startActivity(intent);
+
+            }
+
+        });
     }
 
     @Override
