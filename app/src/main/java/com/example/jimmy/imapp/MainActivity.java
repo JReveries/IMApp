@@ -12,6 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +47,33 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        ListView listView = (ListView) findViewById(R.id.listView_main);
+        List<HashMap<String , String>> list = new ArrayList<>();
+        //使用List存入HashMap，用來顯示ListView上面的文字。
+
+        String[] title = new String[]{"Apple" , "Banana" , "Cat" , "Dog"};
+        String[] text  = new String[]{"蘋果" , "香蕉" , "貓" , "狗"};
+        for(int i = 0 ; i < title.length ; i++){
+            HashMap<String , String> hashMap = new HashMap<>();
+            hashMap.put("title" , title[i]);
+            hashMap.put("text" , text[i]);
+            //把title , text存入HashMap之中
+            list.add(hashMap);
+            //把HashMap存入list之中
+        }
+
+        ListAdapter listAdapter = new SimpleAdapter(
+                this,
+                list,
+                android.R.layout.simple_list_item_2 ,
+                new String[]{"title" , "text"} ,
+                new int[]{android.R.id.text1 , android.R.id.text2});
+        // 5個參數 : context , List , layout , key1 & key2 , text1 & text2
+
+        listView.setAdapter(listAdapter);
+
     }
 
     @Override
